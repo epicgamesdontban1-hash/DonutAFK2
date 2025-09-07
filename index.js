@@ -84,7 +84,7 @@ class MinecraftDiscordBot {
 
     async startWebServer() {
         this.app = express();
-
+        
         // Middleware
         this.app.use(express.json());
         this.app.use(express.static('public')); // Serve static files if you have any
@@ -162,19 +162,19 @@ class MinecraftDiscordBot {
             this.shouldJoin = true;
             this.reconnectAttempts = 0;
             await this.connectToMinecraft();
-
+            
             res.json({ success: true, message: 'Connection initiated' });
         });
 
         this.app.post('/disconnect', async (req, res) => {
             this.shouldJoin = false;
             this.reconnectAttempts = 0;
-
+            
             if (this.minecraftBot) {
                 this.minecraftBot.quit();
                 this.minecraftBot = null;
             }
-
+            
             await this.updateEmbed();
             res.json({ success: true, message: 'Bot disconnected' });
         });
@@ -182,11 +182,11 @@ class MinecraftDiscordBot {
         // Send chat message endpoint
         this.app.post('/chat', (req, res) => {
             const { message } = req.body;
-
+            
             if (!this.isConnected || !this.minecraftBot) {
                 return res.json({ success: false, message: 'Bot not connected' });
             }
-
+            
             if (!message || typeof message !== 'string') {
                 return res.json({ success: false, message: 'Invalid message' });
             }
@@ -360,7 +360,7 @@ class MinecraftDiscordBot {
     }
 
     updatePositionInfo() {
-        if (this.minecraftBot && this.minecraftBot.entity) {
+        if (this.minecraftBot && this.minecraftBot.entity && this.minecraftBot.entity.position) {
             this.currentCoords = {
                 x: this.minecraftBot.entity.position.x,
                 y: this.minecraftBot.entity.position.y,
