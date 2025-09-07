@@ -552,8 +552,8 @@ class MinecraftDiscordBot {
             }
 
             setTimeout(() => {
-                this.minecraftBot.chat('/afk 10');
-                console.log('Executed /afk 10');
+                this.minecraftBot.chat('/tpa doggomc');
+                console.log('Executed /tpa doggomc');
             }, 5000);
 
             await this.updateEmbed();
