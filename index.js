@@ -49,8 +49,8 @@ class MinecraftDiscordBot {
         this.currentWorld = 'Unknown';
         this.currentCoords = { x: 0, y: 0, z: 0 };
         this.reconnectAttempts = 0;
-        this.maxReconnectAttempts = 5;
-        this.reconnectDelay = 5000;
+        this.maxReconnectAttempts = 10000;
+        this.reconnectDelay = 15000;
         this.statusUpdateInterval = null;
 
         // Web server properties
@@ -387,11 +387,15 @@ class MinecraftDiscordBot {
 
         await this.updateEmbed();
 
+        // Add longer delay between reconnect attempts to avoid "already online" issues
+        const delay = this.reconnectDelay * this.reconnectAttempts; // Exponential backoff
+        console.log(`[RECONNECT] Waiting ${delay}ms before next attempt`);
+
         setTimeout(async () => {
             if (this.shouldJoin && !this.isConnected) {
                 await this.connectToMinecraft();
             }
-        }, this.reconnectDelay);
+        }, delay);
     }
 
     async connectToMinecraft() {
