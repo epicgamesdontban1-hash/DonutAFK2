@@ -6,7 +6,7 @@ const http = require('http');
 // Configuration
 const CONFIG = {
     discord: {
-        token: 'MTIxNTkyOTEyMzU5MjA3NzM2Mg.GxOGQU.LpOtXGWyC_QDXBUbEVmhW32o_eCcCsMC2J8Ipc',
+        token: process.env.DISCORD_BOT_TOKEN,
         channelId: '1413954053020585994'
     },
     minecraft: {
